@@ -1,23 +1,21 @@
-# Introduction
-# Day 1 - 30DaysOfPython Challenge
+person={
+    'first_name': 'Asabeneh',
+    'last_name': 'Yetayeh',
+    'age': 250,
+    'country': 'Finland',
+    'is_marred': True,
+    'skills': ['JavaScript', 'React', 'Node', 'MongoDB', 'Python'],
+    'address': {
+        'street': 'Space street',
+        'zipcode': '02210'
+    }
+    }
+keys = person.keys()
+if 'skills' in person:
+    print('skills exist in person')
+else:
+    print('skills does not exist')
+print(person['skills'][2])
+print(person['skills'][4])
 
-print(3 + 2)   # addition(+)
-print(3 - 2)   # subtraction(-)
-print(3 * 2)   # multiplication(*)
-print(3 / 2)   # division(/)
-print(3 ** 2)  # exponential(**)
-print(3 % 2)   # modulus(%)
-print(3 // 2)  # Floor division operator(//)
-
-# Checking data types
-
-print(type(10))                  # Int
-print(type(3.14))                # Float
-print(type(1 + 3j))              # Complex
-print(type('Asabeneh'))          # String
-print(type([1, 2, 3]))           # List
-print(type({'name':'Asabeneh'})) # Dictionary
-print(type({9.8, 3.14, 2.7}))    # Set
-print(type((9.8, 3.14, 2.7)))    # Tuple
-print(type(3 == 3))              # Bool
-print(type(3 >= 3))              # Bool
+level = input('Please make your entry:')
