@@ -461,3 +461,13 @@ print(age_in_set)
 print(len(age)) # the length of the list of ages is 8
 print(len(age_in_set)) # the length of the set of ages is 5
 print('The length of list of ages is longer having 8 while that of set is 5')
+
+A = {'i', 'am', 'a', 'teacher'}
+B = {'i', 'love', 'to', 'inspire'} 
+C = {'teach', 'people'}
+print(A.difference(B))
+print(A.difference(C))
+print(B.difference(C))
+
+
+

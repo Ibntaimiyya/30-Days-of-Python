@@ -1,21 +1,33 @@
-person={
-    'first_name': 'Asabeneh',
-    'last_name': 'Yetayeh',
-    'age': 250,
-    'country': 'Finland',
-    'is_marred': True,
-    'skills': ['JavaScript', 'React', 'Node', 'MongoDB', 'Python'],
-    'address': {
-        'street': 'Space street',
-        'zipcode': '02210'
-    }
-    }
-keys = person.keys()
-if 'skills' in person:
-    print('skills exist in person')
-else:
-    print('skills does not exist')
-print(person['skills'][2])
-print(person['skills'][4])
 
-level = input('Please make your entry:')
+#Call your function is_empty, it takes a parameter and it checks if it is empty or not
+def is_empty(param):
+    if len(param)==0:
+        return True
+    else:
+        return False
+print(is_empty(''))
+#Write different functions which take lists. They should calculate_mean, calculate_median, calculate_mode, calculate_range, calculate_variance, calculate_std (standard deviation).
+def calculate_mean(list):
+    total = 0
+    for i in list:
+        total += i
+    return total / len(list)
+print(calculate_mean([1, 2, 3, 4, 5]))
+
+
+def calculate_median(list):
+    list.sort()
+    if len(list) % 2 == 0:
+        median = (list[len(list) // 2] + list[len(list) // 2 - 1]) / 2
+    else:
+        median = list[len(list) // 2]
+    return median
+print(calculate_median([1, 2, 3, 4, 5, 6]))
+
+def calculate_mode(list):
+    mode = max(list, key = list.count)
+    return mode
+print(calculate_mode([1, 2, 3, 4, 5, 5, 6, 6, 6]))
+
+#Exercises: Level 3
+#Write a function called is_prime, which checks if a number is prime.
