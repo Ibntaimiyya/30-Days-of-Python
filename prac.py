@@ -1,4 +1,4 @@
-#Exercises: Level 1
+#Exercises: Level 1 ####
 '''
 Python has the module called statistics and we can use this module to do all the statistical calculations. However, to learn how to make
 function and reuse function let us try to develop a program, which calculates the measure of central tendency of a sample (mean, median,
@@ -71,6 +71,7 @@ class PersonAccount:
         return self.total_income() - self.total_expense()
 print(data.describe())
 
+### Exercise lvl 2 ###
 
 class PersonAccount:
     def __init__(self, firstname, lastname):
