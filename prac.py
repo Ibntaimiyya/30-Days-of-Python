@@ -1,114 +1,154 @@
-#Exercises: Level 1 ####
+Write a function which count number of lines and number of words in a text. All the files are in the data the folder: a) Read obama_speech.txt file and count number of lines and words b) Read michelle_obama_speech.txt file and count number of lines and words c) Read donald_speech.txt file and count number of lines and words d) Read melina_trump_speech.txt file and count number of lines and words
+def count_lines_and_words(filename):
+    from pathlib import Path
+    file = Path(filename)
+    if file.exists():
+        with open(file, 'r') as f:
+            content = f.read()
+            lines = content.splitlines()
+            words = content.split()
+            return {'lines': len(lines), 'words': len(words)}
+    else:
+        return 'The file does not exist'
+print(count_lines_and_words('./30-days-of-python/datas/obama_speech.txt'))
+print(count_lines_and_words('./30-days-of-python/datas/michelle_obama_speech.txt'))
+print(count_lines_and_words('./30-days-of-python/datas/donald_speech.txt'))
+print(count_lines_and_words('./30-days-of-python/datas/melina_trump_speech.txt'))
+#Read the countries_data.json data file in data directory, create a function that finds the ten most spoken languages
+def most_spoken_languages(filename, number):
+    import json
+    from collections import Counter
+    with open(filename, 'r', encoding = 'utf-8') as f:
+        data = json.load(f)
+        languages = []
+        for country in data:
+            languages.extend(country['languages'])
+        languages_count = Counter(languages)
+        return languages_count.most_common(number)
+for language in most_spoken_languages('./30-days-of-python/datas/countries_data.json', 10):
+print(language)
+#print(most_spoken_languages('./30-days-of-python/datas/countries_data.json', 10))
+
+# Your output should look like this
+#print(most_spoken_languages(filename='./data/countries_data.json', 10))
+#[(91, 'English'),
+#(45, 'French'),
+#(25, 'Arabic'),
+#(24, 'Spanish'),
+#(9, 'Russian'),
+#(9, 'Portuguese'),
+#(8, 'Dutch'),
+#(7, 'German'),
+#(5, 'Chinese'),
+#(4, 'Swahili'),
+#(4, 'Serbian')]
+
+# Your output should look like this
+#print(most_spoken_languages(filename='./data/countries_data.json', 3))
+#[(91, 'English'),
+#(45, 'French'),
+#(25, 'Arabic')]
+#Read the countries_data.json data file in data directory, create a function that creates a list of the ten most populated countries
+def most_populated_countries(filename, number):
+    import json
+    with open (filename, 'r', encoding = 'utf-8') as f:
+        data = json.load(f)
+        data.sort(key = lambda x: x['population'], reverse = True)
+        return [{'country': country['name'], 'population': country['population']} for country in data[:number]]
+for country in most_populated_countries('./30-days-of-python/datas/countries_data.json', 10):
+    print(country)    
+#print(most_populated_countries('./30-days-of-python/datas/countries_data.json', 10))
+
+# Your output should look like this
+#print(most_populated_countries(filename='./data/countries_data.json', 10))
 '''
-Python has the module called statistics and we can use this module to do all the statistical calculations. However, to learn how to make
-function and reuse function let us try to develop a program, which calculates the measure of central tendency of a sample (mean, median,
-mode) and measure of variability (range, variance, standard deviation). In addition to those measures, find the min, max, count, percentile,
-and frequency distribution of the sample. You can create a class called Statistics and create all the functions that do statistical calculations
-as methods for the Statistics class. Check the output below.
+[
+{'country': 'China', 'population': 1377422166},
+{'country': 'India', 'population': 1295210000},
+{'country': 'United States of America', 'population': 323947000},
+{'country': 'Indonesia', 'population': 258705000},
+{'country': 'Brazil', 'population': 206135893},
+{'country': 'Pakistan', 'population': 194125062},
+{'country': 'Nigeria', 'population': 186988000},
+{'country': 'Bangladesh', 'population': 161006790},
+{'country': 'Russian Federation', 'population': 146599183},
+{'country': 'Japan', 'population': 126960000}
+]
 '''
-ages = [31, 26, 34, 37, 27, 26, 32, 32, 26, 27, 27, 24, 32, 33, 27, 25, 26, 38, 37, 31, 34, 24, 33, 29, 26]
-class Statistics:
-    def __init__(self, data):
-        self.data = data
-    def count(self):
-        return len(self.data)
-    def sum(self):
-        return sum(self.data)
-    def min(self):
-        return min(self.data)
-    def max(self):
-        return max(self.data)
-    def range(self):
-        return max(self.data) - min(self.data)
-    def mean(self):
-        return round(sum(self.data) / len(self.data))
-    def median(self):
-        data = sorted(self.data)
-        n = len(data)
-        if n % 2 == 0:
-            median1 = data[n//2]
-            median2 = data[n//2 - 1]
-            median = (median1 + median2) / 2
-        else:
-            median = data[n//2]
-        return median
-    def mode(self):
-        data = sorted(self.data)
-        mode = max(data, key = data.count)
-        return {'mode': mode, 'count': data.count(mode)}
-    def variance(self):
-        mean = self.mean()
-        return sum((x - mean) ** 2 for x in self.data) / len(self.data)
-    def std(self):
-        result = self.variance() ** 0.5
-        rounded_result = round(result, 1)
-        return rounded_result
-    def freq_dist(self):
-        data = sorted(self.data)
-        freq_dist = [(x, data.count(x)) for x in set(data)]
-        return sorted(freq_dist, key = lambda x: x[1], reverse = True)
-    def describe(self):
-        return f'Count: {self.count()}\nSum: {self.sum()}\nMin: {self.min()}\nMax: {self.max()}\nRange: {self.range()}\nMean: {self.mean()}\nMedian: {self.median()}\nMode: {self.mode()}\nVariance: {self.variance()}\nStandard Deviation: {self.std()}\nFrequency Distribution: {self.freq_dist()}'
-data = Statistics(ages)
+# Your output should look like this
 
-class PersonAccount:
-    def __init__(self, firstname, lastname, incomes, expenses):
-        self.firstname = firstname
-        self.lastname = lastname
-        self.incomes = incomes
-        self.expenses = expenses
-    def total_income(self):
-        return sum(self.incomes.values())
-    def total_expense(self):
-        return sum(self.expenses.values())
-    def account_info(self):
-        return f'{self.firstname} {self.lastname} \nTotal Income: {self.total_income()} \nTotal Expense: {self.total_expense()}'
-    def add_income(self, description, amount):
-        self.incomes[description] = amount
-    def add_expense(self, description, amount):
-        self.expenses[description] = amount
-    def account_balance(self):
-        return self.total_income() - self.total_expense()
-print(data.describe())
+#print(most_populated_countries(filename='./data/countries_data.json', 3))
+#[
+#{'country': 'China', 'population': 1377422166},
+#{'country': 'India', 'population': 1295210000},
+#{'country': 'United States of America', 'population': 323947000}
+#]
+#Exercises: Level 2
+#Extract all incoming email addresses as a list from the email_exchange_big.txt file.
+def extract_emails(filename):
+    import re
+    with open(filename, 'r') as f:
+        content = f.read()
+        return re.findall(r'[\w\.-]+@[\w\.-]+', content)
+#print(extract_emails('./30-days-of-python/datas/email_exchange_big.txt'))
 
-### Exercise lvl 2 ###
+#Find the most common words in the English language. Call the name of your function find_most_common_words, it will take two parameters - a string or a file and a positive integer, indicating the number of words. Your function will return an array of tuples in descending order. Check the output
+# Your output should look like this
+#    print(find_most_common_words('sample.txt', 10))
+#    [(10, 'the'),
+#    (8, 'be'),
+#    (6, 'to'),
+#    (6, 'of'),
+#    (5, 'and'),
+#    (4, 'a'),
+#    (4, 'in'),
+#    (3, 'that'),
+#    (2, 'have'),
+#    (2, 'I')]
+def find_most_common_words(filename, number):
+    import re
+    from collections import Counter
+    with open (filename, 'r') as f:
+        content = f.read().lower()
+        words = re.findall(r'\b\w+\b', content)
+        stop_words = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'I']
+        words = [word for word in words if word not in stop_words]
+        words_count = Counter(words)
+        return words_count.most_common(number)
+for word in find_most_common_words('./30-days-of-python/datas/donald_speech.txt', 10):
+    print(word)
+#    # Your output should look like this
+#    print(find_most_common_words('sample.txt', 5))
+#
+#    [(10, 'the'),
+#    (8, 'be'),
+#    (6, 'to'),
+#    (6, 'of'),
+#    (5, 'and')]
+for word in find_most_common_words('./30-days-of-python/datas/donald_speech.txt', 5):
+    print(word)
 
-class PersonAccount:
-    def __init__(self, firstname, lastname):
-        self.firstname = firstname
-        self.lastname = lastname
-        self.incomes = []
-        self.expenses = []
-
-    def add_income(self, amount, description):
-        self.incomes.append({'amount': amount, 'description': description})
-
-    def add_expense(self, amount, description):
-        self.expenses.append({'amount': amount, 'description': description})
-
-    def total_income(self):
-        return sum(income['amount'] for income in self.incomes)
-
-    def total_expense(self):
-        return sum(expense['amount'] for expense in self.expenses)
-
-    def account_balance(self):
-        return self.total_income() - self.total_expense()
-
-    def account_info(self):
-        return {
-            'firstname': self.firstname,
-            'lastname': self.lastname,
-            'total_income': self.total_income(),
-            'total_expense': self.total_expense(),
-            'account_balance': self.account_balance()
-        }
-
-# Let me use my name:
-person = PersonAccount('Abdulhamid', 'Abubakar')
-person.add_income(5000, 'Salary')
-person.add_income(200, 'Freelance')
-person.add_expense(1500, 'Rent')
-person.add_expense(200, 'Groceries')
-
-print(person.account_info())
+#Use the function, find_most_frequent_words to find: a) The ten most frequent words used in Obama's speech b) The ten most frequent words used in Michelle's speech c) The ten most frequent words used in Trump's speech d) The ten most frequent words used in Melina's speech
+def find_most_frequent_words(filename, number):
+    import re
+    from collections import Counter
+    with open (filename, 'r') as f:
+        content = f.read().lower()
+        words = re.findall(r'\b\w+\b', content)
+        stop_words = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'I']
+        words = [word for word in words if word not in stop_words]
+        words_count = Counter(words)
+        return words_count.most_common(number)
+#Find the 10 most repeated words in the romeo_and_juliet.txt
+def find_most_repeated_words(filename, number):
+    import re
+    from collections import Counter
+    with open (filename, 'r') as f:
+        content = f.read().lower()
+        words = re.findall(r'\b\w+\b', content)
+        stop_words = ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'I']
+        words = [word for word in words if word not in stop_words]
+        words_count = Counter(words)
+        return words_count.most_common(number)
+for word in find_most_repeated_words('./30-days-of-python/datas/romeo_and_juliet.txt', 10):
+    print(word)
